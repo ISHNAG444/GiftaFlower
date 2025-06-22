@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift a Flower</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e1e8f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #dd3e54 0%, #6be585 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            background: white;
+            color: #e91e63;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            padding: 30px;
+        }
+        
+        .form-section {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        h2 {
+            color: #dd3e54;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #7b1fa2;
+            outline: none;
+        }
+        
+        .flowers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .flower-option {
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .flower-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .flower-option.selected {
+            border-color: #e91e63;
+            box-shadow: 0 5px 15px rgba(233,30,99,0.2);
+        }
+        
+        .flower-image {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .flower-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .custom-upload {
+            display: none;
+        }
+        
+        .custom-upload-label {
+            display: block;
+            text-align: center;
+            background: #f0f0f0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .custom-upload-label:hover {
+            background: #e0e0e0;
+        }
+        
+        button {
+            background: linear-gradient(90deg, #4CAF50 0%, #81C784 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(76,175,80,0.4);
+        }
+        
+        #confirmation {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .preview-container {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 15px;
+            color: #1a237e;
+            text-align: center;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #1DA1F2;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        .copyright {
+            opacity: 0.8;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* Image change instructions */
+        .image-help {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-gift"></i>
+                <h1>Gift a Flower </h1>
+            </div>
+            <p class="tagline">Send free anonymous flowers to anyone on X!</p>
+        </header>
+        
+        <div class="main-content">
+            <section class="form-section">
+                <h2>SEND FLOWERS</h2>
+                <form id="flowerForm">
+                    <div class="form-group">
+                        <label for="twitterHandle">Recipient's Twitter Handle:</label>
+                        <input type="text" id="twitterHandle" placeholder="@username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Choose a Flower:</label>
+                        <div class="flowers-grid">
+                            <!-- Rose - Change image by replacing the URL below -->
+                            <div class="flower-option" data-flower="rose">
+                                <img src="https://i.ibb.co/1GwKfvfd/Red-flower-bouquet.jpg"crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&w=300" alt="Rose" class="flower-image">
+                                <div class="flower-name">Rose</div>
+                            </div>
+                            
+                            <!-- Lilies - Change image by replacing the URL below -->
+                            <div class="flower-option" data-flower="lilies">
+                                <img src="https://i.ibb.co/67yB2GF4/lillies.jpg"crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&w=300" alt="Lilies" class="flower-image">
+                                <div class="flower-name">Lilies</div>
+                            </div>
+                            
+                            <!-- Daisies - Change image by replacing the URL below -->
+                            <div class="flower-option" data-flower="daisies">
+                                <img src="https://i.ibb.co/jPhFrNp9/daisies.jpg"crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&w=300" alt="Daisies" class="flower-image">
+                                <div class="flower-name">Daisies</div>
+                            </div>
+                            
+                            <!-- Sunflower - Change image by replacing the URL below -->
+                            <div class="flower-option" data-flower="sunflower">
+                                <img src="https://i.ibb.co/Zp6yXgGr/Sunflower.jpg"crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&w=300" alt="Sunflower" class="flower-image">
+                                <div class="flower-name">Sunflower</div>
+                            </div>
+                            
+                            <!-- Tulips - Change image by replacing the URL below -->
+                            <div class="flower-option" data-flower="tulips">
+                                <img src="https://i.ibb.co/hPkzsT3/white-tulips.jpg"crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&w=300" alt="Tulips" class="flower-image">
+                                <div class="flower-name">Tulips</div>
+                            </div>
+                            
+                            <!-- Orchids - Change image by replacing the URL below -->
+                            <div class="flower-option" data-flower="orchids">
+                                <img src="https://i.ibb.co/cK1sxcTh/orchids.jpg"crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&w=300" alt="Orchids" class="flower-image">
+                                <div class="flower-name">Orchids</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Or Upload Your Own Flower Image:</label>
+                        <input type="file" id="customFlower" class="custom-upload" accept="image/*">
+                        <label for="customFlower" class="custom-upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i> Choose Custom Flower
+                        </label>
+                        <div class="preview-container" id="previewContainer">
+                            <img id="previewImage" class="preview-image">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="sendButton">
+                        <i class="fas fa-paper-plane"></i> Send Flower Anonymously
+                    </button>
+                </form>
+                
+                <div id="confirmation">
+                    <h3><i class="fas fa-check-circle"></i> Flower Sent Successfully!</h3>
+                    <p>Your gift is on its way. The recipient will be notified on Twitter!</p>
+                </div>
+            </section>
+            
+            <div class="instructions">
+                <h3>How It Works</h3>
+                <ul>
+                    <li>Enter any Twitter/X @username</li>
+                    <li>Select a flower from our collection or upload your own</li>
+                    <li>We'll send an anonymous tweet with the flower to the recipient</li>
+                    <li>100% free and anonymous!</li>
+                </ul>
+            </div>
+        
+        <footer>
+    <div class="social-links">
+        <a href="#" class="social-link">
+            <!-- Updated X logo SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="X" role="img" style="fill: currentColor; width: 1em; height: 1em;">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+        </a>
+    </div>
+    <p>Follow us on X: <strong>@GiftaFlower</strong></p>
+    <p class="copyright">© 2025 Gift a Flower | Spread Joy and Love Daily</p>
+</footer>
+
+    <script>
+        // Flower selection
+        const flowerOptions = document.querySelectorAll('.flower-option');
+        
+        flowerOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove selection from all options
+                flowerOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selection to clicked option
+                option.classList.add('selected');
+            });
+        });
+        
+        // Handle custom image upload
+        const customUpload = document.getElementById('customFlower');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        
+        customUpload.addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                    
+                    // Deselect any selected flower options
+                    flowerOptions.forEach(opt => opt.classList.remove('selected'));
+                }
+                
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+        
+        // Form submission
+        const flowerForm = document.getElementById('flowerForm');
+        const confirmation = document.getElementById('confirmation');
+        const twitterHandleInput = document.getElementById('twitterHandle');
+        
+        flowerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Validate input
+            if (!twitterHandleInput.value.startsWith('@') || twitterHandleInput.value.length < 2) {
+                alert('Please enter a valid Twitter handle starting with @');
+                twitterHandleInput.focus();
+                return;
+            }
+            
+            const selectedFlower = document.querySelector('.flower-option.selected');
+            if (!selectedFlower && !customUpload.files[0]) {
+                alert('Please select a flower or upload a custom image');
+                return;
+            }
+            
+            // Show confirmation message
+            confirmation.style.display = 'block';
+            
+            // Reset form after submission
+            setTimeout(() => {
+                flowerForm.reset();
+                flowerOptions.forEach(opt => opt.classList.remove('selected'));
+                previewContainer.style.display = 'none';
+                
+                // Scroll to confirmation
+                confirmation.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        });
+        
+        // Twitter handle input formatting
+        twitterHandleInput.addEventListener('input', () => {
+            let value = twitterHandleInput.value.trim();
+            
+            // Add @ if missing
+            if (value && !value.startsWith('@')) {
+                twitterHandleInput.value = '@' + value;
+            }
+            
+            // Remove spaces
+            twitterHandleInput.value = twitterHandleInput.value.replace(/\s/g, '');
+        });
+    </script>
+</body>
+</html>
